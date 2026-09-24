@@ -20,6 +20,8 @@
           julia
           gfortran.cc.lib
           stdenv.cc.cc.lib
+
+          imv
         ];
 
         LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
