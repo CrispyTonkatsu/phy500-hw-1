@@ -1,0 +1,10 @@
+name = "hw1"
+uuid = "7c54067e-8f95-4b15-8d32-9aff36f6b58e"
+version = "0.1.0"
+authors = ["Edgar Jose Donoso Mansilla <edguitar.dm@gmail.com>"]
+
+[deps]
+GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
+
+[compat]
+GLMakie = "0.13.15"
