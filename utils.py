@@ -1,5 +1,34 @@
 import numpy as np
 import plotly.graph_objects as go
+import sympy as sp
+
+
+def find_critical_points(f):
+    x, y = sp.symbols("x y")
+    f_expr = f(x, y)
+
+    df_dx = sp.diff(f_expr, x)
+    df_dy = sp.diff(f_expr, y)
+
+    raw_solutions = sp.solve((df_dx, df_dy), (x, y))
+
+    critical_points = []
+
+    solution_list = (
+        [raw_solutions] if isinstance(raw_solutions, dict) else raw_solutions
+    )
+
+    for solution in solution_list:
+        cx_sym = solution[x] if isinstance(solution, dict) else solution[0]
+        cy_sym = solution[y] if isinstance(solution, dict) else solution[1]
+
+        cx, cy = float(cx_sym.evalf()), float(cy_sym.evalf())
+        cz = float(f_expr.subs({x: cx_sym, y: cy_sym}).evalf())
+
+        label = f"Crit: ({cx_sym}, {cy_sym})"
+        critical_points.append((cx, cy, cz, label))
+
+    return critical_points
 
 
 def gradient_descent(start, learn_rate, f_grad, slope_target=0.05):
@@ -34,6 +63,7 @@ def plot_function(title, X, Y, Z, U, V, crit_points, f, descent_path):
     cx = [p[0] for p in crit_points]
     cy = [p[1] for p in crit_points]
     cz = [p[2] for p in crit_points]
+    labels = [p[3] for p in crit_points]
 
     points_trace = go.Scatter3d(
         x=cx,
@@ -44,6 +74,7 @@ def plot_function(title, X, Y, Z, U, V, crit_points, f, descent_path):
         textposition="top center",
         textfont={"color": "white", "size": 12},
         name="Critical Points",
+        text=labels,
     )
 
     z_floor = np.full_like(X, np.min(Z))
