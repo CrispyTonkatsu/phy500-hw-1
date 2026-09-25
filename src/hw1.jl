@@ -10,11 +10,11 @@ function render_surface!(axis, f)
 
     surface!(axis, xs, ys, zs)
 
-    contour3d!(axis, xs, ys, zs,
-        levels=15,
-        linewidth=2,
-        color=:white
-    )
+    # contour3d!(axis, xs, ys, zs,
+    #     levels=15,
+    #     linewidth=2,
+    #     color=:white
+    # )
 end
 
 function render_crit_points!(axis, points, points_size)

@@ -42,7 +42,7 @@ fig2 = Figure(size=(720, 720))
 
 axis2 = Axis(
     fig2[1, 1],
-    title="Vector Field",
+    title="Quadratic Vector Field",
     aspect=DataAspect()
 )
 
