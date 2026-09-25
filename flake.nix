@@ -16,6 +16,7 @@
           ps: with ps; [
             plotly
             numpy
+            scipy
             sympy
           ]
         )

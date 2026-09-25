@@ -48,7 +48,7 @@ def plot_function(title, X, Y, Z, U, V, crit_points, f, descent_path):
     surface = go.Surface(
         x=X,
         y=Y,
-        z=Z,
+        z=Z.T,
         colorscale="Viridis",
         opacity=0.7,
         colorbar={"thickness": 15, "len": 0.6},
@@ -116,6 +116,7 @@ def plot_function(title, X, Y, Z, U, V, crit_points, f, descent_path):
         title={"text": title, "font": {"size": 16}},
         width=720,
         height=720,
+        scene={"aspectmode": "cube"},
     )
 
     return fig
