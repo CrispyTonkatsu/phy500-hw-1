@@ -10,26 +10,28 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
+
+      pythonEnv = (
+        pkgs.python3.withPackages (
+          ps: with ps; [
+            plotly
+            numpy
+            scipy
+            kaleido
+            marimo
+          ]
+        )
+      );
     in
     {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          libGL
-          glfw
+          basedpyright
+          ruff
 
-          julia
-          gfortran.cc.lib
-          stdenv.cc.cc.lib
+          pythonEnv
 
           imv
-        ];
-
-        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-          pkgs.libGL
-          pkgs.glfw
-
-          pkgs.gfortran.cc.lib
-          pkgs.stdenv.cc.cc.lib
         ];
       };
     };
