@@ -5,5 +5,6 @@
   "reportMissingTypeStubs": false,
   "reportUnknownVariableType": false,
   "reportUnknownParameterType": false,
-  "reportMissingParameterType": false
+  "reportMissingParameterType": false,
+  "reportAny": false
 }
