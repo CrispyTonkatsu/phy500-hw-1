@@ -17,8 +17,6 @@
             plotly
             numpy
             scipy
-            kaleido
-            marimo
           ]
         )
       );
@@ -30,8 +28,6 @@
           ruff
 
           pythonEnv
-
-          imv
         ];
       };
     };

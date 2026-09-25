@@ -2,9 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "run notebook",
+      "label": "run",
       "type": "shell",
-      "command": "marimo run --watch hw.py",
+      "command": "python render.py",
       "runOptions": {
         "instanceLimit": 1,
         "instancePolicy": "terminateOldest"
