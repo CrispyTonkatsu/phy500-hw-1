@@ -2,7 +2,20 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-def plot_function(title, X, Y, Z, U, V, crit_points):
+def gradient_descent(start, learn_rate, f_grad, slope_target=0.05):
+    x = start
+    x_seq = [x.copy()]
+    grad = np.array(f_grad(x[0], x[1]))
+
+    while np.dot(grad, grad) > slope_target**2:
+        x = x - learn_rate * grad
+        grad = np.array(f_grad(x[0], x[1]))
+        x_seq.append(x.copy())
+
+    return x_seq
+
+
+def plot_function(title, X, Y, Z, U, V, crit_points, f, descent_path):
     surface = go.Surface(
         x=X,
         y=Y,
@@ -21,17 +34,16 @@ def plot_function(title, X, Y, Z, U, V, crit_points):
     cx = [p[0] for p in crit_points]
     cy = [p[1] for p in crit_points]
     cz = [p[2] for p in crit_points]
-    labels = [p[3] for p in crit_points]
 
     points_trace = go.Scatter3d(
         x=cx,
         y=cy,
         z=cz,
         mode="markers+text",
-        marker={"size": 8, "color": "red", "symbol": "circle"},
-        text=labels,
+        marker={"size": 4, "color": "red", "symbol": "circle"},
         textposition="top center",
         textfont={"color": "white", "size": 12},
+        name="Critical Points",
     )
 
     z_floor = np.full_like(X, np.min(Z))
@@ -53,7 +65,21 @@ def plot_function(title, X, Y, Z, U, V, crit_points):
         showscale=False,
     )
 
-    fig = go.Figure([surface, points_trace, vectors])
+    px = [p[0] for p in descent_path]
+    py = [p[1] for p in descent_path]
+    pz = [f(p[0], p[1]) for p in descent_path]
+
+    descent_path_trace = go.Scatter3d(
+        x=px,
+        y=py,
+        z=pz,
+        mode="lines+markers",
+        marker={"size": 4, "color": "orange", "symbol": "diamond"},
+        line={"color": "orange", "width": 5},
+        name="Gradient Descent",
+    )
+
+    fig = go.Figure([surface, points_trace, vectors, descent_path_trace])
 
     fig.update_layout(
         title={"text": title, "font": {"size": 16}},
@@ -62,3 +88,29 @@ def plot_function(title, X, Y, Z, U, V, crit_points):
     )
 
     return fig
+
+
+def create_plot(
+    title,
+    x,
+    y,
+    f,
+    f_x,
+    f_y,
+    crit_points,
+    descent_start,
+    learn_rate=0.05,
+    slope_target=0.05,
+):
+    def f_grad(x, y):
+        return [f_x(x, y), f_y(x, y)]
+
+    X, Y = np.meshgrid(x, y)
+    Z = f(Y, X)
+
+    U = f_x(X, Y)
+    V = f_y(X, Y)
+
+    descent_path = gradient_descent(descent_start, learn_rate, f_grad, slope_target)
+
+    return plot_function(title, X, Y, Z, U, V, crit_points, f, descent_path)
