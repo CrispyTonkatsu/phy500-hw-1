@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run notebook",
+      "type": "shell",
+      "command": "marimo run --watch hw.py",
+      "runOptions": {
+        "instanceLimit": 1,
+        "instancePolicy": "terminateOldest"
+      }
+    }
+  ]
+}

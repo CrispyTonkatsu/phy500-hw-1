@@ -19,9 +19,6 @@
             scipy
             kaleido
             marimo
-            nbformat
-            nbconvert
-            playwright
           ]
         )
       );
