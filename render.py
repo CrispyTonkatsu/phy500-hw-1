@@ -20,8 +20,6 @@ y = np.linspace(-10, 10, 50)
 
 descent_start = [10, 10]
 
-crit_points = ut.find_critical_points(f)
-
-fig = ut.create_plot("Quadratic", x, y, f, f_x, f_y, crit_points, descent_start)
+fig = ut.create_plot("Quadratic", x, y, f, f_x, f_y, descent_start)
 
 fig.show()

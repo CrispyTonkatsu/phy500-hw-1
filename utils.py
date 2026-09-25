@@ -128,7 +128,6 @@ def create_plot(
     f,
     f_x,
     f_y,
-    crit_points,
     descent_start,
     learn_rate=0.05,
     slope_target=0.05,
@@ -141,6 +140,8 @@ def create_plot(
 
     U = f_x(X, Y)
     V = f_y(X, Y)
+
+    crit_points = find_critical_points(f)
 
     descent_path = gradient_descent(descent_start, learn_rate, f_grad, slope_target)
 
