@@ -28,7 +28,6 @@ def _(mo):
         Below is the static visualization optimized for reliable PDF printing and homework submission.
         """
     )
-    return
 
 
 @app.cell
@@ -80,20 +79,23 @@ def _(go, mo, np):
     fig = go.Figure(data=[surface, cones])
 
     fig = fig.update_traces(
-        contours_z=dict(
-            show=True, usecolormap=True, project_z=True, highlightcolor="limegreen"
-        ),
-        selector=dict(type="surface"),
-    )  # type: ignore[reportUnknownMemberType]
+        contours_z={
+            "show": True,
+            "usecolormap": True,
+            "project_z": True,
+            "highlightcolor": "limegreen",
+        },
+        selector={"type": "surface"},
+    )
 
     fig.update_layout(
         title="Calculus Homework Static Model",
-        scene=dict(
-            xaxis_title="X Axis",
-            yaxis_title="Y Axis",
-            zaxis_title="Z Axis",
-            aspectratio=dict(x=1, y=1, z=0.7),
-        ),
+        scene={
+            "xaxis_title": "X Axis",
+            "yaxis_title": "Y Axis",
+            "zaxis_title": "Z Axis",
+            "aspectratio": {"x": 1, "y": 1, "z": 0.7},
+        },
         width=850,
         height=650,
     )
@@ -103,7 +105,6 @@ def _(go, mo, np):
 
     # Display the static image through marimo
     mo.image(src=img_bytes, width=800)
-    return
 
 
 if __name__ == "__main__":
