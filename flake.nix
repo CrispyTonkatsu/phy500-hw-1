@@ -7,29 +7,31 @@
 
   outputs =
     { self, nixpkgs, ... }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
-
-      pythonEnv = (
-        pkgs.python3.withPackages (
-          ps: with ps; [
-            plotly
-            numpy
-            scipy
-            sympy
-          ]
-        )
-      );
-    in
     {
-      devShells.${system}.default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-          basedpyright
-          ruff
+      devShells = builtins.mapAttrs (
+        system: pkgs:
+        let
+          pythonEnv = (
+            pkgs.python3.withPackages (
+              ps: with ps; [
+                plotly
+                numpy
+                scipy
+                sympy
+              ]
+            )
+          );
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              basedpyright
+              ruff
 
-          pythonEnv
-        ];
-      };
+              pythonEnv
+            ];
+          };
+        }
+      ) nixpkgs.legacyPackages;
     };
 }
