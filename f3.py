@@ -28,7 +28,14 @@ fig = ut.create_plot(
     f_x,
     f_y,
     descent_start,
-    hard_crit_points=[(0, 0, f(0, 0), "Critical point")],
+    hard_crit_points=[
+        (
+            0,
+            0,
+            f(0, 0),
+            "Critical point",
+        )
+    ],
 )
 
 fig.show()
