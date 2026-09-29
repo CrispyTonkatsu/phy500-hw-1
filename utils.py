@@ -22,10 +22,10 @@ def find_critical_points(f):
         cx_sym = solution[x] if isinstance(solution, dict) else solution[0]
         cy_sym = solution[y] if isinstance(solution, dict) else solution[1]
 
-        cx, cy = float(cx_sym.evalf()), float(cy_sym.evalf())
-        cz = float(f_expr.subs({x: cx_sym, y: cy_sym}).evalf())
+        cx, cy = float(sp.re(cx_sym).evalf()), float(sp.re(cy_sym).evalf())
+        cz = float(f_expr.subs({x: sp.re(cx_sym), y: sp.re(cy_sym)}).evalf())
 
-        label = f"Crit: ({cx_sym}, {cy_sym})"
+        label = "Critical point"
         critical_points.append((cx, cy, cz, label))
 
     return critical_points
